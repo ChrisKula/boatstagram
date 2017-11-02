@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Boatstagram</string>
+
+    <string name="instagram_base_url" translatable="false">https://www.instagram.com</string>
 </resources>
