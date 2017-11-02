@@ -5,7 +5,7 @@ import com.christiankula.boatstagram.feed.rest.models.InstagramTagResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface BoatStragramService {
+public interface BoatstragramService {
 
     /**
      * Returns a {@link Call} of {@link InstagramTagResult} for the tag "boat"
