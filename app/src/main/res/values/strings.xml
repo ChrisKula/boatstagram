@@ -2,4 +2,7 @@
     <string name="app_name">Boatstagram</string>
 
     <string name="instagram_base_url" translatable="false">https://www.instagram.com</string>
+
+    <string name="post_picture_content_description">Photo</string>
+    <string name="hashtag_boat" translatable="false">#boat</string>
 </resources>
