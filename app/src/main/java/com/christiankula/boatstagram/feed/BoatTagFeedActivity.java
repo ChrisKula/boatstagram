@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoatsFeedActivity extends AppCompatActivity {
+public class BoatTagFeedActivity extends AppCompatActivity {
 
     @Inject
     BoatstragramService s;
@@ -32,7 +32,7 @@ public class BoatsFeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_boats_feed);
+        setContentView(R.layout.activity_boat_tag_feed);
 
         ButterKnife.bind(this);
         ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
