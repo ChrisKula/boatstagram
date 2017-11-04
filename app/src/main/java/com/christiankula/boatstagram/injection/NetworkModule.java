@@ -26,7 +26,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    BoatstragramService provideBoatStragramService(@Named(INSTAGRAM_BASE_URL_NAME) String baseUrl) {
+    BoatstragramService provideBoatstragramService(@Named(INSTAGRAM_BASE_URL_NAME) String baseUrl) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(JacksonConverterFactory.create())

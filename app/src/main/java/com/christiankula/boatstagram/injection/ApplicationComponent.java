@@ -7,7 +7,10 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {ApplicationModule.class, NetworkModule.class})
+@Component(modules = {
+        ApplicationModule.class,
+        NetworkModule.class,
+        BoatTagFeedModule.class})
 public interface ApplicationComponent {
 
     void inject(BoatTagFeedActivity target);

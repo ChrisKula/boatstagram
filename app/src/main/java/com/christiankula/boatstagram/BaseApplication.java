@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.christiankula.boatstagram.injection.ApplicationComponent;
 import com.christiankula.boatstagram.injection.ApplicationModule;
+import com.christiankula.boatstagram.injection.BoatTagFeedModule;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
 import com.christiankula.boatstagram.injection.NetworkModule;
 
@@ -21,6 +22,7 @@ public class BaseApplication extends Application {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
+                .boatTagFeedModule(new BoatTagFeedModule())
                 .build();
     }
 
