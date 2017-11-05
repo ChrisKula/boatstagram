@@ -40,6 +40,8 @@ public class BoatTagFeedPresenter {
     }
 
     private void fetchBoatPosts() {
+        boatTagFeedView.setRefreshing(true);
+
         boatstragramService.getBoatTagResult().enqueue(new Callback<InstagramTagResult>() {
             @Override
             public void onResponse(Call<InstagramTagResult> call, Response<InstagramTagResult> response) {
@@ -56,14 +58,16 @@ public class BoatTagFeedPresenter {
                 } else {
                     //TODO error handling
                 }
+
+                boatTagFeedView.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<InstagramTagResult> call, Throwable t) {
                 t.printStackTrace();
 
-
                 //TODO error handling
+                boatTagFeedView.setRefreshing(false);
             }
         });
     }
@@ -82,6 +86,10 @@ public class BoatTagFeedPresenter {
 
     void onStoragePermissionDenied() {
 
+    }
+
+    void onRefresh() {
+        fetchBoatPosts();
     }
 
     private void startDownloadingPictures() {

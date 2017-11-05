@@ -15,4 +15,6 @@ public interface BoatTagFeedView {
     void startDownloadingPictures(List<Post> posts);
 
     void displayNoPictureToDownloadToast();
+
+    void setRefreshing(boolean enable);
 }

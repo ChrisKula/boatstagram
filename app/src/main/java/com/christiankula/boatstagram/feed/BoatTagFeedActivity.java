@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.christiankula.boatstagram.BaseApplication;
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.download.DownloadPicturesService;
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.utils.ViewUtils;
 
 import org.parceler.Parcels;
 
@@ -35,6 +38,12 @@ import butterknife.ButterKnife;
 public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFeedView {
 
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3105;
+
+    @BindView(R.id.srl_root_view)
+    SwipeRefreshLayout srlRootView;
+
+    @BindView(R.id.cl_container)
+    ConstraintLayout clContainer;
 
     @BindView(R.id.rv_regular_posts)
     RecyclerView rvRegularPosts;
@@ -52,9 +61,22 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
         ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
+        initSwipeRefreshLayout();
         initRecyclerViewPosts();
 
         boatTagFeedPresenter.attachView(this);
+    }
+
+    private void initSwipeRefreshLayout() {
+        srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
+                ContextCompat.getColor(this, R.color.colorAccent));
+
+        srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                boatTagFeedPresenter.onRefresh();
+            }
+        });
     }
 
     private void initRecyclerViewPosts() {
@@ -98,6 +120,8 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
     @Override
     public void displayPosts(List<Post> posts) {
         postsAdapter.setData(posts);
+
+        ViewUtils.fadeIn(rvRegularPosts);
     }
 
     @Override
@@ -141,6 +165,11 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
                 showRequestStoragePermissionDialog();
             }
         }
+    }
+
+    @Override
+    public void setRefreshing(boolean enable) {
+        srlRootView.setRefreshing(enable);
     }
 
     @Override
