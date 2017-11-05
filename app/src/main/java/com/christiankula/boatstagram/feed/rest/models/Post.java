@@ -27,7 +27,7 @@ public class Post {
     @JsonProperty("code")
     private String code;
     @JsonProperty("date")
-    private int date;
+    private long date;
     @JsonProperty("display_src")
     private String displaySrc;
     @JsonProperty("caption")
@@ -109,13 +109,16 @@ public class Post {
         this.code = code;
     }
 
+    /**
+     * Returns the post's date as epoch timestamp
+     */
     @JsonProperty("date")
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
     @JsonProperty("date")
-    public void setDate(int date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
