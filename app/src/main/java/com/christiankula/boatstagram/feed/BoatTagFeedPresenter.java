@@ -40,6 +40,8 @@ public class BoatTagFeedPresenter {
     }
 
     private void fetchBoatPosts() {
+        boatTagFeedView.setRefreshing(true);
+
         boatstragramService.getBoatTagResult().enqueue(new Callback<InstagramTagResult>() {
             @Override
             public void onResponse(Call<InstagramTagResult> call, Response<InstagramTagResult> response) {
@@ -56,15 +58,45 @@ public class BoatTagFeedPresenter {
                 } else {
                     //TODO error handling
                 }
+
+                boatTagFeedView.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<InstagramTagResult> call, Throwable t) {
                 t.printStackTrace();
 
-
                 //TODO error handling
+                boatTagFeedView.setRefreshing(false);
             }
         });
+    }
+
+    void onDownloadMenuItemClick() {
+        if (boatTagFeedView.hasStoragePermission()) {
+            startDownloadingPictures();
+        } else {
+            boatTagFeedView.requestStoragePermission();
+        }
+    }
+
+    void onStoragePermissionGranted() {
+        startDownloadingPictures();
+    }
+
+    void onStoragePermissionDenied() {
+
+    }
+
+    void onRefresh() {
+        fetchBoatPosts();
+    }
+
+    private void startDownloadingPictures() {
+        if (lastFetchedPosts == null || lastFetchedPosts.isEmpty()) {
+            boatTagFeedView.displayNoPictureToDownloadToast();
+        } else {
+            boatTagFeedView.startDownloadingPictures(lastFetchedPosts);
+        }
     }
 }

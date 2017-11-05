@@ -5,4 +5,21 @@
 
     <string name="post_picture_content_description">Photo</string>
     <string name="hashtag_boat" translatable="false">#boat</string>
+
+    <string name="menu_item_download_all_pictures">Download all pictures</string>
+
+    <string name="alert_dialog_title_storage_permission_needed">Storage permission</string>
+    <string name="alert_dialog_message_storage_permission_needed">Boastagram needs access to device\'s storage in order to download the pictures to your device\'s storage.\n\nDo you want to grant storage permission ?</string>
+    <string name="alert_dialog_positive_button_storage_permission_needed">Ask again</string>
+    <string name="toast_no_picture_to_download">There\'s no picture to download</string>
+
+    <string name="notification_title_pictures_download_in_progress">Downloading %1$d pictures…</string>
+    <string name="notification_text_pictures_download_in_progress">%1$d out of %2$d</string>
+
+    <string name="notification_title_pictures_download_completed">Download completed!</string>
+    <string name="notification_text_pictures_download_completed">Downloaded %1$d out of %2$d pictures</string>
+
+    <string name="notification_channel_id_download_pictures" translatable="false">channel_id_download_pictures</string>
+    <string name="notification_channel_name_download_pictures">Pictures downloading</string>
+    <string name="notification_channel_description_download_pictures">Downloading of posts\' pictures</string>
 </resources>
