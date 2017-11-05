@@ -1,11 +1,14 @@
 
 package com.christiankula.boatstagram.feed.rest.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import org.parceler.Parcel;
 
+@Parcel
+@JsonIgnoreProperties({"thumbnail_resources"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Post {
 
@@ -19,8 +22,6 @@ public class Post {
     private Owner owner;
     @JsonProperty("thumbnail_src")
     private String thumbnailSrc;
-    @JsonProperty("thumbnail_resources")
-    private List<Object> thumbnailResources = null;
     @JsonProperty("is_video")
     private boolean isVideo;
     @JsonProperty("code")
@@ -86,16 +87,6 @@ public class Post {
     @JsonProperty("thumbnail_src")
     public void setThumbnailSrc(String thumbnailSrc) {
         this.thumbnailSrc = thumbnailSrc;
-    }
-
-    @JsonProperty("thumbnail_resources")
-    public List<Object> getThumbnailResources() {
-        return thumbnailResources;
-    }
-
-    @JsonProperty("thumbnail_resources")
-    public void setThumbnailResources(List<Object> thumbnailResources) {
-        this.thumbnailResources = thumbnailResources;
     }
 
     @JsonProperty("is_video")
