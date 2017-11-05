@@ -5,4 +5,6 @@
 
     <string name="post_picture_content_description">Photo</string>
     <string name="hashtag_boat" translatable="false">#boat</string>
+
+    <string name="menu_item_download_all_pictures">Download all pictures</string>
 </resources>
