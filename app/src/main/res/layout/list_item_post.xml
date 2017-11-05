@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/cardview_post_height"
+    android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true">
 
     <android.support.constraint.ConstraintLayout

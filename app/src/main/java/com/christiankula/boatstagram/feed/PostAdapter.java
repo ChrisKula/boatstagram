@@ -1,5 +1,6 @@
 package com.christiankula.boatstagram.feed;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.post.details.PostDetailsActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -36,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
-        Post post = data.get(position);
+        final Post post = data.get(position);
 
         Picasso.with(holder.tvThumbnail.getContext())
                 .load(post.getThumbnailSrc())
@@ -44,6 +48,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 .into(holder.tvThumbnail);
 
         holder.tvCaption.setText(post.getCaption());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PostDetailsActivity.class);
+
+                intent.putExtra(PostDetailsActivity.POST_EXTRA, Parcels.wrap(post));
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

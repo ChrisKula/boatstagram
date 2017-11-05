@@ -11,6 +11,7 @@ import com.christiankula.boatstagram.injection.ApplicationModule;
 import com.christiankula.boatstagram.injection.BoatTagFeedModule;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
 import com.christiankula.boatstagram.injection.NetworkModule;
+import com.christiankula.boatstagram.injection.PostDetailModule;
 
 public class BaseApplication extends Application {
 
@@ -29,6 +30,7 @@ public class BaseApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
                 .boatTagFeedModule(new BoatTagFeedModule())
+                .postDetailModule(new PostDetailModule())
                 .build();
     }
 

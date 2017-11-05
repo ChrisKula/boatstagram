@@ -22,4 +22,8 @@
     <string name="notification_channel_id_download_pictures" translatable="false">channel_id_download_pictures</string>
     <string name="notification_channel_name_download_pictures">Pictures downloading</string>
     <string name="notification_channel_description_download_pictures">Downloading of posts\' pictures</string>
+
+    <string name="toolbar_title_post_details">Post details</string>
+
+    <string name="date_time_format">hh:mma - d MMM YYYY</string>
 </resources>
