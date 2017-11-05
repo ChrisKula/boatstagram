@@ -67,4 +67,28 @@ public class BoatTagFeedPresenter {
             }
         });
     }
+
+    void onDownloadMenuItemClick() {
+        if (boatTagFeedView.hasStoragePermission()) {
+            startDownloadingPictures();
+        } else {
+            boatTagFeedView.requestStoragePermission();
+        }
+    }
+
+    void onStoragePermissionGranted() {
+        startDownloadingPictures();
+    }
+
+    void onStoragePermissionDenied() {
+
+    }
+
+    private void startDownloadingPictures() {
+        if (lastFetchedPosts == null || lastFetchedPosts.isEmpty()) {
+            boatTagFeedView.displayNoPictureToDownloadToast();
+        } else {
+            boatTagFeedView.startDownloadingPictures(lastFetchedPosts);
+        }
+    }
 }
