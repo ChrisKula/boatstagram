@@ -6,6 +6,7 @@ import com.christiankula.boatstagram.feed.rest.models.Post;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -16,11 +17,15 @@ import retrofit2.Response;
 public class BoatTagFeedPresenter {
     private static final String TAG = BoatTagFeedPresenter.class.getSimpleName();
 
+    private static final long INTERVAL_BETWEEN_TWO_UPDATES = TimeUnit.SECONDS.toMillis(30);
+
     private BoatTagFeedView boatTagFeedView;
 
     private BoatstragramService boatstragramService;
 
-    private List<Post> lastFetchedPosts;
+    private List<Post> lastUpdatedPosts;
+
+    private long lastUpdateTimestamp = Long.MAX_VALUE;
 
     @Inject
     public BoatTagFeedPresenter(BoatstragramService boatstragramService) {
@@ -28,7 +33,9 @@ public class BoatTagFeedPresenter {
     }
 
     void onResume() {
-        fetchBoatPosts();
+        if (System.currentTimeMillis() > lastUpdateTimestamp + INTERVAL_BETWEEN_TWO_UPDATES) {
+            updateBoatPosts();
+        }
     }
 
     void attachView(BoatTagFeedView view) {
@@ -39,7 +46,7 @@ public class BoatTagFeedPresenter {
         this.boatTagFeedView = null;
     }
 
-    private void fetchBoatPosts() {
+    private void updateBoatPosts() {
         boatTagFeedView.setRefreshing(true);
 
         boatstragramService.getBoatTagResult().enqueue(new Callback<InstagramTagResult>() {
@@ -48,13 +55,13 @@ public class BoatTagFeedPresenter {
                 if (response.isSuccessful() && response.body() != null) {
                     InstagramTagResult body = response.body();
 
-                    lastFetchedPosts = body.getTag().getMedia().getPosts();
+                    lastUpdatedPosts = body.getTag().getMedia().getPosts();
 
-                    if (lastFetchedPosts == null) {
-                        lastFetchedPosts = new ArrayList<>();
+                    if (lastUpdatedPosts == null) {
+                        lastUpdatedPosts = new ArrayList<>();
                     }
 
-                    boatTagFeedView.displayPosts(lastFetchedPosts);
+                    boatTagFeedView.displayPosts(lastUpdatedPosts);
                 } else {
                     //TODO error handling
                 }
@@ -70,6 +77,8 @@ public class BoatTagFeedPresenter {
                 boatTagFeedView.setRefreshing(false);
             }
         });
+
+        lastUpdateTimestamp = System.currentTimeMillis();
     }
 
     void onDownloadMenuItemClick() {
@@ -89,14 +98,14 @@ public class BoatTagFeedPresenter {
     }
 
     void onRefresh() {
-        fetchBoatPosts();
+        updateBoatPosts();
     }
 
     private void startDownloadingPictures() {
-        if (lastFetchedPosts == null || lastFetchedPosts.isEmpty()) {
+        if (lastUpdatedPosts == null || lastUpdatedPosts.isEmpty()) {
             boatTagFeedView.displayNoPictureToDownloadToast();
         } else {
-            boatTagFeedView.startDownloadingPictures(lastFetchedPosts);
+            boatTagFeedView.startDownloadingPictures(lastUpdatedPosts);
         }
     }
 }

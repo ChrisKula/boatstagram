@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> data;
 
@@ -27,15 +27,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
     }
 
     @Override
-    public PostAdapter.PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_post, parent, false);
 
-        return new PostAdapter.PostsViewHolder(itemView);
+        return new PostViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PostAdapter.PostsViewHolder holder, int position) {
+    public void onBindViewHolder(PostViewHolder holder, int position) {
         Post post = data.get(position);
 
         Picasso.with(holder.tvThumbnail.getContext())
@@ -51,11 +51,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
         return data.size();
     }
 
-    class PostsViewHolder extends RecyclerView.ViewHolder {
+    class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView tvThumbnail;
         TextView tvCaption;
 
-        PostsViewHolder(View itemView) {
+        PostViewHolder(View itemView) {
             super(itemView);
 
             tvThumbnail = itemView.findViewById(R.id.iv_list_item_post_thumbnail);
