@@ -3,21 +3,16 @@ package com.christiankula.boatstagram.feed.download;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.utils.FileUtils;
 
-import org.apache.commons.io.FileUtils;
 import org.parceler.Parcels;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class DownloadPicturesService extends IntentService {
@@ -27,12 +22,6 @@ public class DownloadPicturesService extends IntentService {
     public static final int DOWNLOADING_PICTURES_NOTIFICATION_ID = 31;
 
     public static final String POSTS_EXTRA = "POSTS";
-
-    private static final long CONNECTION_TIMEOUT_MS = TimeUnit.SECONDS.toMillis(2);
-    private static final long READ_TIMEOUT_MS = TimeUnit.SECONDS.toMillis(2);
-
-    private static final File BOASTAGRAM_DOWNLOAD_FOLDER = new File(Environment.getExternalStorageDirectory(),
-            "Boastagram/Downloads/");
 
     private NotificationManager notificationManager;
 
@@ -52,18 +41,11 @@ public class DownloadPicturesService extends IntentService {
             for (int i = 0; i < posts.size(); i++) {
                 Post post = posts.get(i);
 
-                File pictureFile = new File(BOASTAGRAM_DOWNLOAD_FOLDER, post.getId() + ".jpg");
-
-                try {
-                    FileUtils.copyURLToFile(new URL(post.getDisplaySrc()), pictureFile, (int) CONNECTION_TIMEOUT_MS, (int) READ_TIMEOUT_MS);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    break;
-                } finally {
-                    showProgressNotification(i + 1, posts.size());
+                if (FileUtils.savePostPictureToDisk(post)) {
+                    successfullyDownloadedPictures++;
                 }
 
-                successfullyDownloadedPictures++;
+                showProgressNotification(i + 1, posts.size());
             }
 
             showDownloadCompleteNotification(successfullyDownloadedPictures, posts.size());
