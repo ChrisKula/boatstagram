@@ -56,7 +56,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        ((BoastagramApplication) getApplication()).getApplicationComponent().inject(this);
+        ((BoastagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         setupActionBar();

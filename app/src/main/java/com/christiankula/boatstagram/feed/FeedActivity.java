@@ -58,7 +58,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boat_tag_feed);
 
-        ((BoastagramApplication) getApplication()).getApplicationComponent().inject(this);
+        ((BoastagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         initSwipeRefreshLayout();

@@ -1,8 +1,5 @@
 package com.christiankula.boatstagram.injection;
 
-import com.christiankula.boatstagram.feed.FeedActivity;
-import com.christiankula.boatstagram.post.details.PostDetailsActivity;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -13,9 +10,6 @@ import dagger.Component;
         NetworkModule.class,
         FeedModule.class,
         PostDetailsModule.class})
-public interface ApplicationComponent {
+interface ApplicationComponent  extends BoastagramComponent{
 
-    void inject(FeedActivity target);
-
-    void inject(PostDetailsActivity target);
 }

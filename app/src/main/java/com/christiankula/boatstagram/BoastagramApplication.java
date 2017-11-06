@@ -6,32 +6,35 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.christiankula.boatstagram.injection.ApplicationComponent;
 import com.christiankula.boatstagram.injection.ApplicationModule;
-import com.christiankula.boatstagram.injection.FeedModule;
+import com.christiankula.boatstagram.injection.BoastagramComponent;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
+import com.christiankula.boatstagram.injection.FeedModule;
 import com.christiankula.boatstagram.injection.NetworkModule;
 import com.christiankula.boatstagram.injection.PostDetailsModule;
 
 public class BoastagramApplication extends Application {
 
-    private ApplicationComponent applicationComponent;
+    private final BoastagramComponent component = createComponent();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = initDagger();
 
         initNotificationChannels();
     }
 
-    private ApplicationComponent initDagger() {
+    protected BoastagramComponent createComponent() {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
                 .feedModule(new FeedModule())
                 .postDetailsModule(new PostDetailsModule())
                 .build();
+    }
+
+    public BoastagramComponent getComponent() {
+        return component;
     }
 
     private void initNotificationChannels() {
@@ -49,9 +52,5 @@ public class BoastagramApplication extends Application {
                 notificationManager.createNotificationChannel(mChannel);
             }
         }
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
     }
 }

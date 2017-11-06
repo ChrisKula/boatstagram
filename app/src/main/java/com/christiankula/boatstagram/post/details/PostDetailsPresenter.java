@@ -4,6 +4,8 @@ import com.christiankula.boatstagram.feed.rest.models.Post;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 public class PostDetailsPresenter {
 
     private PostDetailsView postDetailsView;
@@ -11,6 +13,10 @@ public class PostDetailsPresenter {
     private Post currentDisplayedPost;
 
     private boolean isInfoPanelVisible;
+
+    @Inject
+    public PostDetailsPresenter() {
+    }
 
     void attachView(PostDetailsView view) {
         this.postDetailsView = view;
