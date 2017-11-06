@@ -13,7 +13,7 @@ import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
 import com.christiankula.boatstagram.injection.NetworkModule;
 import com.christiankula.boatstagram.injection.PostDetailModule;
 
-public class BaseApplication extends Application {
+public class BoastagramApplication extends Application {
 
     private ApplicationComponent applicationComponent;
 
