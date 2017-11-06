@@ -14,12 +14,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoatTagFeedPresenter {
-    private static final String TAG = BoatTagFeedPresenter.class.getSimpleName();
+public class FeedPresenter {
+    private static final String TAG = FeedPresenter.class.getSimpleName();
 
     private static final long INTERVAL_BETWEEN_TWO_UPDATES = TimeUnit.SECONDS.toMillis(30);
 
-    private BoatTagFeedView boatTagFeedView;
+    private FeedView feedView;
 
     private BoatstragramService boatstragramService;
 
@@ -28,7 +28,7 @@ public class BoatTagFeedPresenter {
     private long lastUpdateTimestamp = Long.MAX_VALUE;
 
     @Inject
-    public BoatTagFeedPresenter(BoatstragramService boatstragramService) {
+    public FeedPresenter(BoatstragramService boatstragramService) {
         this.boatstragramService = boatstragramService;
     }
 
@@ -38,16 +38,16 @@ public class BoatTagFeedPresenter {
         }
     }
 
-    void attachView(BoatTagFeedView view) {
-        this.boatTagFeedView = view;
+    void attachView(FeedView view) {
+        this.feedView = view;
     }
 
     void detachView() {
-        this.boatTagFeedView = null;
+        this.feedView = null;
     }
 
     private void updateBoatPosts() {
-        boatTagFeedView.setRefreshing(true);
+        feedView.setRefreshing(true);
 
         boatstragramService.getBoatTagResult().enqueue(new Callback<InstagramTagResult>() {
             @Override
@@ -61,12 +61,12 @@ public class BoatTagFeedPresenter {
                         lastUpdatedPosts = new ArrayList<>();
                     }
 
-                    boatTagFeedView.displayPosts(lastUpdatedPosts);
+                    feedView.displayPosts(lastUpdatedPosts);
                 } else {
                     //TODO error handling
                 }
 
-                boatTagFeedView.setRefreshing(false);
+                feedView.setRefreshing(false);
             }
 
             @Override
@@ -74,7 +74,7 @@ public class BoatTagFeedPresenter {
                 t.printStackTrace();
 
                 //TODO error handling
-                boatTagFeedView.setRefreshing(false);
+                feedView.setRefreshing(false);
             }
         });
 
@@ -82,10 +82,10 @@ public class BoatTagFeedPresenter {
     }
 
     void onDownloadMenuItemClick() {
-        if (boatTagFeedView.hasStoragePermission()) {
+        if (feedView.hasStoragePermission()) {
             startDownloadingPictures();
         } else {
-            boatTagFeedView.requestStoragePermission();
+            feedView.requestStoragePermission();
         }
     }
 
@@ -103,9 +103,9 @@ public class BoatTagFeedPresenter {
 
     private void startDownloadingPictures() {
         if (lastUpdatedPosts == null || lastUpdatedPosts.isEmpty()) {
-            boatTagFeedView.displayNoPictureToDownloadToast();
+            feedView.displayNoPictureToDownloadToast();
         } else {
-            boatTagFeedView.startDownloadingPictures(lastUpdatedPosts);
+            feedView.startDownloadingPictures(lastUpdatedPosts);
         }
     }
 }
