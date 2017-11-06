@@ -1,0 +1,23 @@
+<resources>
+    <string name="post_picture_content_description">Photo</string>
+
+    <string name="menu_item_download_all_pictures">Télécharger toutes les images</string>
+
+    <string name="alert_dialog_title_storage_permission_needed">Permission d\'accès au stockage</string>
+    <string name="alert_dialog_message_storage_permission_needed">Boatstagram a besoin de la permission d\'accèder au stockage de l\'appareil afin de pouvoir télécharger les images.\n\nVoulez-vous donner la permission d\'accèder au stockage de l\'appareil ?</string>
+    <string name="alert_dialog_positive_button_storage_permission_needed">Redemander</string>
+    <string name="toast_no_picture_to_download">Il n\'y a pas d\'image à télécharger</string>
+
+    <string name="notification_title_pictures_download_in_progress">Téléchargement de %1$d images …</string>
+    <string name="notification_text_pictures_download_in_progress">%1$d sur %2$d</string>
+
+    <string name="notification_title_pictures_download_completed">Téléchargement terminé !</string>
+    <string name="notification_text_pictures_download_completed">%1$d images téléchargées sur %2$d</string>
+
+    <string name="notification_channel_name_download_pictures">Téléchargement d\'images</string>
+    <string name="notification_channel_description_download_pictures">Téléchargement des images de posts</string>
+
+    <string name="toolbar_title_post_details">Détails du post</string>
+
+    <string name="date_time_format">HH:mm - d MMM YYYY</string>
+</resources>
