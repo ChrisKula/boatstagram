@@ -19,7 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".feed.download.DownloadPicturesService" />
+
+        <activity
+            android:name=".post.details.PostDetailsActivity"
+            android:parentActivityName=".feed.BoatTagFeedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
