@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFeedView {
+public class FeedActivity extends AppCompatActivity implements FeedView {
 
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3105;
 
@@ -49,7 +49,7 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
     RecyclerView rvRegularPosts;
 
     @Inject
-    BoatTagFeedPresenter boatTagFeedPresenter;
+    FeedPresenter feedPresenter;
 
     private PostAdapter postsAdapter;
 
@@ -64,7 +64,7 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
         initSwipeRefreshLayout();
         initRecyclerViewPosts();
 
-        boatTagFeedPresenter.attachView(this);
+        feedPresenter.attachView(this);
     }
 
     private void initSwipeRefreshLayout() {
@@ -74,7 +74,7 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
         srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                boatTagFeedPresenter.onRefresh();
+                feedPresenter.onRefresh();
             }
         });
     }
@@ -89,12 +89,12 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
     @Override
     protected void onResume() {
         super.onResume();
-        boatTagFeedPresenter.onResume();
+        feedPresenter.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        boatTagFeedPresenter.detachView();
+        feedPresenter.detachView();
 
         super.onDestroy();
     }
@@ -110,7 +110,7 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_download_all_pictures:
-                boatTagFeedPresenter.onDownloadMenuItemClick();
+                feedPresenter.onDownloadMenuItemClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -177,16 +177,16 @@ public class BoatTagFeedActivity extends AppCompatActivity implements BoatTagFee
         switch (requestCode) {
             case WRITE_EXTERNAL_STORAGE_REQUEST_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    boatTagFeedPresenter.onStoragePermissionGranted();
+                    feedPresenter.onStoragePermissionGranted();
                 } else {
-                    boatTagFeedPresenter.onStoragePermissionDenied();
+                    feedPresenter.onStoragePermissionDenied();
                 }
             }
         }
     }
 
     private void showRequestStoragePermissionDialog() {
-        ActivityCompat.requestPermissions(BoatTagFeedActivity.this,
+        ActivityCompat.requestPermissions(FeedActivity.this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
     }

@@ -4,7 +4,7 @@ import com.christiankula.boatstagram.feed.rest.models.Post;
 
 import java.util.List;
 
-public interface BoatTagFeedView {
+public interface FeedView {
 
     void displayPosts(List<Post> posts);
 
