@@ -12,7 +12,7 @@ import dagger.Component;
         ApplicationModule.class,
         NetworkModule.class,
         FeedModule.class,
-        PostDetailModule.class})
+        PostDetailsModule.class})
 public interface ApplicationComponent {
 
     void inject(FeedActivity target);

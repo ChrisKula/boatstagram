@@ -11,7 +11,7 @@ import com.christiankula.boatstagram.injection.ApplicationModule;
 import com.christiankula.boatstagram.injection.FeedModule;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
 import com.christiankula.boatstagram.injection.NetworkModule;
-import com.christiankula.boatstagram.injection.PostDetailModule;
+import com.christiankula.boatstagram.injection.PostDetailsModule;
 
 public class BoastagramApplication extends Application {
 
@@ -30,7 +30,7 @@ public class BoastagramApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
                 .feedModule(new FeedModule())
-                .postDetailModule(new PostDetailModule())
+                .postDetailsModule(new PostDetailsModule())
                 .build();
     }
 

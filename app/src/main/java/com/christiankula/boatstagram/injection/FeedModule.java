@@ -13,7 +13,7 @@ public class FeedModule {
 
     @Provides
     @Singleton
-    FeedPresenter provideBoatTagFeedPresenter(BoatstragramService boatstragramService) {
+    FeedPresenter provideFeedPresenter(BoatstragramService boatstragramService) {
         return new FeedPresenter(boatstragramService);
     }
 }
