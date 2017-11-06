@@ -25,7 +25,7 @@ public class FeedPresenter {
 
     private List<Post> lastUpdatedPosts;
 
-    private long lastUpdateTimestamp = Long.MAX_VALUE;
+    private long lastUpdateTimestamp;
 
     @Inject
     public FeedPresenter(BoatstragramService boatstragramService) {
@@ -39,6 +39,8 @@ public class FeedPresenter {
     }
 
     void attachView(FeedView view) {
+        lastUpdateTimestamp = Long.MAX_VALUE;
+
         this.feedView = view;
     }
 
