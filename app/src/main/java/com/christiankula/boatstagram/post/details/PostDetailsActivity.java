@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -109,6 +110,14 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     public void setPicture(String pictureUrl) {
         Picasso.with(this)
                 .load(pictureUrl)
+                .placeholder(R.drawable.ic_boat_blue_24dp)
+                .into(ivPicture);
+    }
+
+    @Override
+    public void setPicture(File pictureFile) {
+        Picasso.with(this)
+                .load(pictureFile)
                 .placeholder(R.drawable.ic_boat_blue_24dp)
                 .into(ivPicture);
     }
