@@ -19,7 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.christiankula.boatstagram.BaseApplication;
+import com.christiankula.boatstagram.BoatstagramApplication;
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.download.DownloadPicturesService;
 import com.christiankula.boatstagram.feed.rest.models.Post;
@@ -48,8 +48,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @BindView(R.id.rv_regular_posts)
     RecyclerView rvRegularPosts;
 
-    @Inject
-    FeedPresenter feedPresenter;
+    private FeedPresenter feedPresenter;
 
     private PostAdapter postsAdapter;
 
@@ -58,32 +57,13 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boat_tag_feed);
 
-        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
+        ((BoatstagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         initSwipeRefreshLayout();
         initRecyclerViewPosts();
 
         feedPresenter.attachView(this);
-    }
-
-    private void initSwipeRefreshLayout() {
-        srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
-                ContextCompat.getColor(this, R.color.colorAccent));
-
-        srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                feedPresenter.onRefresh();
-            }
-        });
-    }
-
-    private void initRecyclerViewPosts() {
-        postsAdapter = new PostAdapter(new ArrayList<Post>());
-
-        rvRegularPosts.setLayoutManager(new LinearLayoutManager(this));
-        rvRegularPosts.setAdapter(postsAdapter);
     }
 
     @Override
@@ -97,6 +77,12 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         feedPresenter.detachView();
 
         super.onDestroy();
+    }
+
+    @Inject
+    @Override
+    public void setPresenter(FeedPresenter presenter) {
+        this.feedPresenter = presenter;
     }
 
     @Override
@@ -183,6 +169,25 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
                 }
             }
         }
+    }
+
+    private void initSwipeRefreshLayout() {
+        srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
+                ContextCompat.getColor(this, R.color.colorAccent));
+
+        srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                feedPresenter.onRefresh();
+            }
+        });
+    }
+
+    private void initRecyclerViewPosts() {
+        postsAdapter = new PostAdapter(new ArrayList<Post>());
+
+        rvRegularPosts.setLayoutManager(new LinearLayoutManager(this));
+        rvRegularPosts.setAdapter(postsAdapter);
     }
 
     private void showRequestStoragePermissionDialog() {

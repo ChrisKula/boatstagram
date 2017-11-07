@@ -8,7 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class PostDetailModule {
+public class PostDetailsModule {
 
     @Singleton
     @Provides

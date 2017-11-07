@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.christiankula.boatstagram.BaseApplication;
+import com.christiankula.boatstagram.BoatstagramApplication;
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.rest.models.Post;
 import com.christiankula.boatstagram.utils.ViewUtils;
@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -28,9 +29,6 @@ import butterknife.OnTouch;
 public class PostDetailsActivity extends AppCompatActivity implements PostDetailsView {
 
     public static final String POST_EXTRA = "POST";
-
-    @Inject
-    PostDetailsPresenter postDetailsPresenter;
 
     @BindView(R.id.tb_post_detail)
     Toolbar toolbar;
@@ -50,13 +48,14 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     @BindView(R.id.tv_post_detail_date)
     TextView tvDate;
 
+    private PostDetailsPresenter postDetailsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
+        ((BoatstagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         setupActionBar();
@@ -65,18 +64,17 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
         postDetailsPresenter.onCreate();
     }
 
-    private void setupActionBar() {
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
     @Override
     protected void onDestroy() {
         postDetailsPresenter.detachView();
 
         super.onDestroy();
+    }
+
+    @Inject
+    @Override
+    public void setPresenter(PostDetailsPresenter presenter) {
+        this.postDetailsPresenter = presenter;
     }
 
     @Override
@@ -117,6 +115,14 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     }
 
     @Override
+    public void setPicture(File pictureFile) {
+        Picasso.with(this)
+                .load(pictureFile)
+                .placeholder(R.drawable.ic_boat_blue_24dp)
+                .into(ivPicture);
+    }
+
+    @Override
     public void setCaption(String caption) {
         tvCaption.setText(caption);
     }
@@ -137,5 +143,12 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     boolean onTouch() {
         postDetailsPresenter.onRootViewTouch();
         return false;
+    }
+
+    private void setupActionBar() {
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }

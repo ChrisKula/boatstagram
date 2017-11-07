@@ -1,10 +1,14 @@
 package com.christiankula.boatstagram.post.details;
 
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.mvp.BasePresenter;
+import com.christiankula.boatstagram.utils.FileUtils;
 
 import java.util.Date;
 
-public class PostDetailsPresenter {
+import javax.inject.Inject;
+
+public class PostDetailsPresenter implements BasePresenter<PostDetailsView> {
 
     private PostDetailsView postDetailsView;
 
@@ -12,19 +16,30 @@ public class PostDetailsPresenter {
 
     private boolean isInfoPanelVisible;
 
-    void attachView(PostDetailsView view) {
+    @Inject
+    public PostDetailsPresenter() {
+    }
+
+    @Override
+    public void attachView(PostDetailsView view) {
         this.postDetailsView = view;
         isInfoPanelVisible = true;
     }
 
-    void detachView() {
+    @Override
+    public void detachView() {
         this.postDetailsView = null;
     }
 
     void onCreate() {
         currentDisplayedPost = postDetailsView.getPostFromIntent();
 
-        postDetailsView.setPicture(currentDisplayedPost.getDisplaySrc());
+        if (FileUtils.postPictureExistsOnDisk(currentDisplayedPost)) {
+            postDetailsView.setPicture(FileUtils.getPostPictureFile(currentDisplayedPost));
+        } else {
+            postDetailsView.setPicture(currentDisplayedPost.getDisplaySrc());
+        }
+
         postDetailsView.setCaption(currentDisplayedPost.getCaption());
         postDetailsView.setDate(new Date(currentDisplayedPost.getDate() * 1000));
         postDetailsView.setLikesCount(currentDisplayedPost.getLikes().getCount());

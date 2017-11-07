@@ -6,32 +6,35 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.christiankula.boatstagram.injection.ApplicationComponent;
 import com.christiankula.boatstagram.injection.ApplicationModule;
-import com.christiankula.boatstagram.injection.FeedModule;
+import com.christiankula.boatstagram.injection.BoatstagramComponent;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
+import com.christiankula.boatstagram.injection.FeedModule;
 import com.christiankula.boatstagram.injection.NetworkModule;
-import com.christiankula.boatstagram.injection.PostDetailModule;
+import com.christiankula.boatstagram.injection.PostDetailsModule;
 
-public class BaseApplication extends Application {
+public class BoatstagramApplication extends Application {
 
-    private ApplicationComponent applicationComponent;
+    private final BoatstagramComponent component = createComponent();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = initDagger();
 
         initNotificationChannels();
     }
 
-    private ApplicationComponent initDagger() {
+    protected BoatstagramComponent createComponent() {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
                 .feedModule(new FeedModule())
-                .postDetailModule(new PostDetailModule())
+                .postDetailsModule(new PostDetailsModule())
                 .build();
+    }
+
+    public BoatstagramComponent getComponent() {
+        return component;
     }
 
     private void initNotificationChannels() {
@@ -49,9 +52,5 @@ public class BaseApplication extends Application {
                 notificationManager.createNotificationChannel(mChannel);
             }
         }
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
     }
 }

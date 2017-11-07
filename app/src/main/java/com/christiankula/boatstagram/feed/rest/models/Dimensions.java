@@ -11,9 +11,9 @@ import org.parceler.Parcel;
 public class Dimensions {
 
     @JsonProperty("height")
-    private int height;
+    int height;
     @JsonProperty("width")
-    private int width;
+    int width;
 
     @JsonProperty("height")
     public int getHeight() {
