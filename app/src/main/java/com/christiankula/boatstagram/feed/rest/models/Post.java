@@ -13,31 +13,31 @@ import org.parceler.Parcel;
 public class Post {
 
     @JsonProperty("comments_disabled")
-    private boolean commentsDisabled;
+    boolean commentsDisabled;
     @JsonProperty("id")
-    private String id;
+    String id;
     @JsonProperty("dimensions")
-    private Dimensions dimensions;
+    Dimensions dimensions;
     @JsonProperty("owner")
-    private Owner owner;
+    Owner owner;
     @JsonProperty("thumbnail_src")
-    private String thumbnailSrc;
+    String thumbnailSrc;
     @JsonProperty("is_video")
-    private boolean isVideo;
+    boolean isVideo;
     @JsonProperty("code")
-    private String code;
+    String code;
     @JsonProperty("date")
-    private long date;
+    long date;
     @JsonProperty("display_src")
-    private String displaySrc;
+    String displaySrc;
     @JsonProperty("caption")
-    private String caption;
+    String caption;
     @JsonProperty("comments")
-    private Comments comments;
+    Comments comments;
     @JsonProperty("likes")
-    private Likes likes;
+    Likes likes;
     @JsonProperty("video_views")
-    private int videoViews;
+    int videoViews;
 
     @JsonProperty("comments_disabled")
     public boolean isCommentsDisabled() {

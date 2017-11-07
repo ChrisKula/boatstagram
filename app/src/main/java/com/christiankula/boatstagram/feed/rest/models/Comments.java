@@ -11,7 +11,7 @@ import org.parceler.Parcel;
 public class Comments {
 
     @JsonProperty("count")
-    private int count;
+    int count;
 
     @JsonProperty("count")
     public int getCount() {

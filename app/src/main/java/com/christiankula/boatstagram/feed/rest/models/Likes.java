@@ -11,7 +11,7 @@ import org.parceler.Parcel;
 public class Likes {
 
     @JsonProperty("count")
-    private int count;
+    int count;
 
     @JsonProperty("count")
     public int getCount() {
