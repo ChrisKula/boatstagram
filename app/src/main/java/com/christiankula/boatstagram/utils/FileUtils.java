@@ -22,13 +22,15 @@ public class FileUtils {
     }
 
     public static boolean savePostPictureToDisk(Post post) {
-        try {
-            File pictureFile = new File(BOASTAGRAM_DOWNLOAD_FOLDER, post.getId() + ".jpg");
+        if (post != null) {
+            try {
+                File pictureFile = new File(BOASTAGRAM_DOWNLOAD_FOLDER, post.getId() + ".jpg");
 
-            org.apache.commons.io.FileUtils.copyURLToFile(new URL(post.getDisplaySrc()), pictureFile, (int) CONNECTION_TIMEOUT_MS, (int) READ_TIMEOUT_MS);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+                org.apache.commons.io.FileUtils.copyURLToFile(new URL(post.getDisplaySrc()), pictureFile, (int) CONNECTION_TIMEOUT_MS, (int) READ_TIMEOUT_MS);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return false;
