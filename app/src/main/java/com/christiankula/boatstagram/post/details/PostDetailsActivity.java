@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.christiankula.boatstagram.BoastagramApplication;
+import com.christiankula.boatstagram.BoatstagramApplication;
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.rest.models.Post;
 import com.christiankula.boatstagram.utils.ViewUtils;
@@ -55,7 +55,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        ((BoastagramApplication) getApplication()).getComponent().inject(this);
+        ((BoatstagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         setupActionBar();

@@ -10,6 +10,6 @@ import dagger.Component;
         NetworkModule.class,
         FeedModule.class,
         PostDetailsModule.class})
-interface ApplicationComponent  extends BoastagramComponent{
+interface ApplicationComponent  extends BoatstagramComponent {
 
 }

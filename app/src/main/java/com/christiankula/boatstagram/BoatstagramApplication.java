@@ -7,15 +7,15 @@ import android.content.Context;
 import android.os.Build;
 
 import com.christiankula.boatstagram.injection.ApplicationModule;
-import com.christiankula.boatstagram.injection.BoastagramComponent;
+import com.christiankula.boatstagram.injection.BoatstagramComponent;
 import com.christiankula.boatstagram.injection.DaggerApplicationComponent;
 import com.christiankula.boatstagram.injection.FeedModule;
 import com.christiankula.boatstagram.injection.NetworkModule;
 import com.christiankula.boatstagram.injection.PostDetailsModule;
 
-public class BoastagramApplication extends Application {
+public class BoatstagramApplication extends Application {
 
-    private final BoastagramComponent component = createComponent();
+    private final BoatstagramComponent component = createComponent();
 
     @Override
     public void onCreate() {
@@ -24,7 +24,7 @@ public class BoastagramApplication extends Application {
         initNotificationChannels();
     }
 
-    protected BoastagramComponent createComponent() {
+    protected BoatstagramComponent createComponent() {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .networkModule(new NetworkModule())
@@ -33,7 +33,7 @@ public class BoastagramApplication extends Application {
                 .build();
     }
 
-    public BoastagramComponent getComponent() {
+    public BoatstagramComponent getComponent() {
         return component;
     }
 

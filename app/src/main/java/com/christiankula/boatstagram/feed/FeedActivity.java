@@ -19,7 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.christiankula.boatstagram.BoastagramApplication;
+import com.christiankula.boatstagram.BoatstagramApplication;
 import com.christiankula.boatstagram.R;
 import com.christiankula.boatstagram.feed.download.DownloadPicturesService;
 import com.christiankula.boatstagram.feed.rest.models.Post;
@@ -57,7 +57,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boat_tag_feed);
 
-        ((BoastagramApplication) getApplication()).getComponent().inject(this);
+        ((BoatstagramApplication) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
         initSwipeRefreshLayout();
