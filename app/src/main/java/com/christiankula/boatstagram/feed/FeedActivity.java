@@ -48,8 +48,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @BindView(R.id.rv_regular_posts)
     RecyclerView rvRegularPosts;
 
-    @Inject
-    FeedPresenter feedPresenter;
+    private FeedPresenter feedPresenter;
 
     private PostAdapter postsAdapter;
 
@@ -67,25 +66,6 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         feedPresenter.attachView(this);
     }
 
-    private void initSwipeRefreshLayout() {
-        srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
-                ContextCompat.getColor(this, R.color.colorAccent));
-
-        srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                feedPresenter.onRefresh();
-            }
-        });
-    }
-
-    private void initRecyclerViewPosts() {
-        postsAdapter = new PostAdapter(new ArrayList<Post>());
-
-        rvRegularPosts.setLayoutManager(new LinearLayoutManager(this));
-        rvRegularPosts.setAdapter(postsAdapter);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -97,6 +77,12 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         feedPresenter.detachView();
 
         super.onDestroy();
+    }
+
+    @Inject
+    @Override
+    public void setPresenter(FeedPresenter presenter) {
+        this.feedPresenter = presenter;
     }
 
     @Override
@@ -183,6 +169,25 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
                 }
             }
         }
+    }
+
+    private void initSwipeRefreshLayout() {
+        srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
+                ContextCompat.getColor(this, R.color.colorAccent));
+
+        srlRootView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                feedPresenter.onRefresh();
+            }
+        });
+    }
+
+    private void initRecyclerViewPosts() {
+        postsAdapter = new PostAdapter(new ArrayList<Post>());
+
+        rvRegularPosts.setLayoutManager(new LinearLayoutManager(this));
+        rvRegularPosts.setAdapter(postsAdapter);
     }
 
     private void showRequestStoragePermissionDialog() {

@@ -29,9 +29,6 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
 
     public static final String POST_EXTRA = "POST";
 
-    @Inject
-    PostDetailsPresenter postDetailsPresenter;
-
     @BindView(R.id.tb_post_detail)
     Toolbar toolbar;
 
@@ -50,6 +47,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     @BindView(R.id.tv_post_detail_date)
     TextView tvDate;
 
+    private PostDetailsPresenter postDetailsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +63,17 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
         postDetailsPresenter.onCreate();
     }
 
-    private void setupActionBar() {
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
     @Override
     protected void onDestroy() {
         postDetailsPresenter.detachView();
 
         super.onDestroy();
+    }
+
+    @Inject
+    @Override
+    public void setPresenter(PostDetailsPresenter presenter) {
+        this.postDetailsPresenter = presenter;
     }
 
     @Override
@@ -137,5 +134,12 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     boolean onTouch() {
         postDetailsPresenter.onRootViewTouch();
         return false;
+    }
+
+    private void setupActionBar() {
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }

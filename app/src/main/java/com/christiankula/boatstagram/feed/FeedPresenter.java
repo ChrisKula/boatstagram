@@ -3,6 +3,7 @@ package com.christiankula.boatstagram.feed;
 import com.christiankula.boatstagram.feed.rest.BoatstragramService;
 import com.christiankula.boatstagram.feed.rest.models.InstagramTagResult;
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.mvp.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FeedPresenter {
+public class FeedPresenter implements BasePresenter<FeedView> {
     private static final String TAG = FeedPresenter.class.getSimpleName();
 
     private static final long INTERVAL_BETWEEN_TWO_UPDATES = TimeUnit.SECONDS.toMillis(30);
@@ -32,20 +33,26 @@ public class FeedPresenter {
         this.boatstragramService = boatstragramService;
     }
 
+    @Override
+    public void attachView(FeedView view) {
+        lastUpdateTimestamp = Long.MAX_VALUE;
+
+        this.feedView = view;
+    }
+
+    @Override
+    public void detachView() {
+        this.feedView = null;
+    }
+
     void onResume() {
         if (System.currentTimeMillis() > lastUpdateTimestamp + INTERVAL_BETWEEN_TWO_UPDATES) {
             updateBoatPosts();
         }
     }
 
-    void attachView(FeedView view) {
-        lastUpdateTimestamp = Long.MAX_VALUE;
-
-        this.feedView = view;
-    }
-
-    void detachView() {
-        this.feedView = null;
+    void onRefresh() {
+        updateBoatPosts();
     }
 
     private void updateBoatPosts() {
@@ -97,10 +104,6 @@ public class FeedPresenter {
 
     void onStoragePermissionDenied() {
 
-    }
-
-    void onRefresh() {
-        updateBoatPosts();
     }
 
     private void startDownloadingPictures() {

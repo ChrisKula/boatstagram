@@ -1,12 +1,13 @@
 package com.christiankula.boatstagram.post.details;
 
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.mvp.BasePresenter;
 
 import java.util.Date;
 
 import javax.inject.Inject;
 
-public class PostDetailsPresenter {
+public class PostDetailsPresenter implements BasePresenter<PostDetailsView> {
 
     private PostDetailsView postDetailsView;
 
@@ -18,12 +19,14 @@ public class PostDetailsPresenter {
     public PostDetailsPresenter() {
     }
 
-    void attachView(PostDetailsView view) {
+    @Override
+    public void attachView(PostDetailsView view) {
         this.postDetailsView = view;
         isInfoPanelVisible = true;
     }
 
-    void detachView() {
+    @Override
+    public void detachView() {
         this.postDetailsView = null;
     }
 

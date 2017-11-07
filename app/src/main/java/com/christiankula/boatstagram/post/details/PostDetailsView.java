@@ -1,10 +1,11 @@
 package com.christiankula.boatstagram.post.details;
 
 import com.christiankula.boatstagram.feed.rest.models.Post;
+import com.christiankula.boatstagram.mvp.BaseView;
 
 import java.util.Date;
 
-interface PostDetailsView {
+interface PostDetailsView extends BaseView<PostDetailsPresenter> {
 
     Post getPostFromIntent();
 
