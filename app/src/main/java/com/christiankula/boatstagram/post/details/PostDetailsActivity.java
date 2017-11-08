@@ -26,6 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTouch;
 
+/**
+ * Its primary goal is to display clicked post's details such as the picture in full-res, the full caption, the date and
+ * likes count.
+ */
 public class PostDetailsActivity extends AppCompatActivity implements PostDetailsView {
 
     public static final String POST_EXTRA = "POST";
@@ -145,6 +149,9 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
         return false;
     }
 
+    /**
+     * Sets upp the Toolbar to be used as the ActionBar
+     */
     private void setupActionBar() {
         setSupportActionBar(toolbar);
 

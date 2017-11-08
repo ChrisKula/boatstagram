@@ -5,6 +5,9 @@ import com.christiankula.boatstagram.feed.rest.models.InstagramTagResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
+/**
+ * Service interface defining Instagram's API endpoints
+ */
 public interface BoatstragramService {
 
     /**

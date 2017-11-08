@@ -17,6 +17,9 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+/**
+ * This adapter is responsible for displaying a Post in a CardView with a small 4-lines caption.
+ */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> data;
@@ -25,6 +28,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.data = data;
     }
 
+    /**
+     * Sets the dataSet for this adapter and notify that the data set has changed
+     */
     public void setData(List<Post> data) {
         this.data = data;
         notifyDataSetChanged();

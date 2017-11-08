@@ -8,6 +8,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Dagger module in charge of providing application dependencies (i.e. Context)
+ */
 @Module
 public class ApplicationModule {
 
@@ -17,6 +20,9 @@ public class ApplicationModule {
         this.application = application;
     }
 
+    /**
+     * Provides application's Context
+     */
     @Provides
     @Singleton
     Context provideContext() {

@@ -21,6 +21,11 @@ public class FileUtils {
 
     }
 
+    /**
+     * Save the given Post's picture in full-res to device's storage
+     *
+     * @return true if the picture has been successfully downloaded, false otherwise
+     */
     public static boolean savePostPictureToDisk(Post post) {
         if (post != null) {
             try {
@@ -36,10 +41,16 @@ public class FileUtils {
         return false;
     }
 
+    /**
+     * Returns whether the given Post's full-res picture already exists on the device's storage
+     */
     public static boolean postPictureExistsOnDisk(Post post) {
         return post != null && getPostPictureFile(post).exists();
     }
 
+    /**
+     * Returns a File representing the given Posts's full-res picture
+     */
     public static File getPostPictureFile(Post post) {
         return new File(BOASTAGRAM_DOWNLOAD_FOLDER, post.getId() + ".jpg");
     }

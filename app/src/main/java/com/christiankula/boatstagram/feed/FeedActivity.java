@@ -35,6 +35,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Application's main activity. Its primary goal is to display a scrollable list of Post with the tag "boat". The posts
+ * are fetched from Instagram.
+ * <br/>
+ * <br/>
+ * The user can download all posts' picture in full-res to the device storage by clicking on a menu item.
+ */
 public class FeedActivity extends AppCompatActivity implements FeedView {
 
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3105;
@@ -123,11 +130,11 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         startService(intent);
     }
 
+    //TODO Move to separate class
     @Override
     public boolean hasStoragePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
-
 
     @Override
     public void requestStoragePermission() {
@@ -171,6 +178,9 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         }
     }
 
+    /**
+     * Initializes the SwipeRefreshLayout colors and onRefreshListener
+     */
     private void initSwipeRefreshLayout() {
         srlRootView.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary),
                 ContextCompat.getColor(this, R.color.colorAccent));
@@ -183,6 +193,9 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
         });
     }
 
+    /**
+     * Initializes the RecyclerView displaying posts with an empty list and a vertical LayoutManager
+     */
     private void initRecyclerViewPosts() {
         postsAdapter = new PostAdapter(new ArrayList<Post>());
 

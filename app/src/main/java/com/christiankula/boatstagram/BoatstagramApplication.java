@@ -24,6 +24,9 @@ public class BoatstagramApplication extends Application {
         initNotificationChannels();
     }
 
+    /**
+     * Builds the application component with all relevant modules in order to set up Dagger for dependency injection
+     */
     protected BoatstagramComponent createComponent() {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
@@ -37,6 +40,10 @@ public class BoatstagramApplication extends Application {
         return component;
     }
 
+    /**
+     * In Android O and onward, notifications channels must be declared in order for notifications to be displayed to
+     * the user. This method initializes app's notification channels.
+     */
     private void initNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(
