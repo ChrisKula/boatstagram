@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
  * <br/>
  * The user can download all posts' picture in full-res to the device storage by clicking on a menu item.
  */
-public class FeedActivity extends AppCompatActivity implements FeedView {
+public class FeedActivity extends AppCompatActivity implements FeedMvp.View {
 
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3105;
 
@@ -55,7 +55,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
     @BindView(R.id.rv_regular_posts)
     RecyclerView rvRegularPosts;
 
-    private FeedPresenter feedPresenter;
+    private FeedMvp.Presenter feedPresenter;
 
     private PostAdapter postsAdapter;
 
@@ -88,7 +88,7 @@ public class FeedActivity extends AppCompatActivity implements FeedView {
 
     @Inject
     @Override
-    public void setPresenter(FeedPresenter presenter) {
+    public void setPresenter(FeedMvp.Presenter presenter) {
         this.feedPresenter = presenter;
     }
 

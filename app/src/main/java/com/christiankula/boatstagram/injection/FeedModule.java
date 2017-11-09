@@ -1,5 +1,7 @@
 package com.christiankula.boatstagram.injection;
 
+import com.christiankula.boatstagram.feed.FeedModel;
+import com.christiankula.boatstagram.feed.FeedMvp;
 import com.christiankula.boatstagram.feed.FeedPresenter;
 import com.christiankula.boatstagram.feed.rest.BoatstragramService;
 
@@ -9,19 +11,30 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Dagger module in charge of providing dependencies for {@link com.christiankula.boatstagram.feed.FeedActivity}
+ * Dagger module in charge of providing dependencies for everything related to the Feed of Posts
  */
 @Module
 public class FeedModule {
 
     /**
-     * Provides a {@link FeedPresenter}
+     * Provides a {@link FeedMvp.Presenter}
      *
-     * @param boatstragramService a BoatstagramService for REST calls
+     * @param feedModel corresponding {@link FeedMvp.Model}
      */
     @Provides
     @Singleton
-    FeedPresenter provideFeedPresenter(BoatstragramService boatstragramService) {
-        return new FeedPresenter(boatstragramService);
+    FeedMvp.Presenter provideFeedPresenter(FeedMvp.Model feedModel) {
+        return new FeedPresenter(feedModel);
+    }
+
+    /**
+     * Provides a {@link FeedMvp.Model}
+     *
+     * @param boatstragramService REST client
+     */
+    @Provides
+    @Singleton
+    FeedMvp.Model provideFeedModel(BoatstragramService boatstragramService) {
+        return new FeedModel(boatstragramService);
     }
 }
