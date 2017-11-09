@@ -19,7 +19,7 @@ public interface FeedMvp {
          *
          * @param listener listener that will react to posts' update
          */
-        void updatePosts(onPostsUpdateListener listener);
+        void updatePosts(OnPostsUpdateListener listener);
 
         /**
          * Returns last updated posts
@@ -39,7 +39,7 @@ public interface FeedMvp {
         /**
          * Listener that reacts to posts' update
          */
-        interface onPostsUpdateListener {
+        interface OnPostsUpdateListener {
             /**
              * Invoked when posts have been updated
              *

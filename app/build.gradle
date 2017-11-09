@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 final SUPPORT_LIB_VERSION = '26.1.0'
@@ -28,6 +34,9 @@ final BUTTERKNIFE_VERSION = '8.8.1'
 final PICASSO_VERSION = '2.5.2'
 final COMMONS_IO_VERSION = '2.6'
 final PARCELER_VERSION = '1.1.9'
+
+final MOCKITO_VERSION = '2.11.0'
+final ROBOLECTRIC_VERSION = '3.5.1'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -56,4 +65,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"
+    testImplementation "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
 }

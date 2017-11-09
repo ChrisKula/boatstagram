@@ -34,7 +34,7 @@ public class FeedModel implements FeedMvp.Model {
     }
 
     @Override
-    public void updatePosts(final onPostsUpdateListener listener) {
+    public void updatePosts(final OnPostsUpdateListener listener) {
         boatstragramService.getBoatTagResult().enqueue(new Callback<InstagramTagResult>() {
             @Override
             public void onResponse(Call<InstagramTagResult> call, Response<InstagramTagResult> response) {

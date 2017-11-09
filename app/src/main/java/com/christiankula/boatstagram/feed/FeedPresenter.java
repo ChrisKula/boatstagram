@@ -11,7 +11,7 @@ import javax.inject.Inject;
  * This class is responsible for getting the data provided by {@link #feedModel} and reacts accordingly on the {@link
  * #feedView}
  */
-public class FeedPresenter implements FeedMvp.Presenter, FeedModel.onPostsUpdateListener {
+public class FeedPresenter implements FeedMvp.Presenter, FeedMvp.Model.OnPostsUpdateListener {
 
     private static final String TAG = FeedPresenter.class.getSimpleName();
 
