@@ -19,5 +19,5 @@
 
     <string name="toolbar_title_post_details">Détails du post</string>
 
-    <string name="date_time_format">HH:mm - d MMM YYYY</string>
+    <string name="date_time_format">HH:mm - d MMM yyyy</string>
 </resources>
