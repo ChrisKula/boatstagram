@@ -30,7 +30,7 @@ import butterknife.OnTouch;
  * Its primary goal is to display clicked post's details such as the picture in full-res, the full caption, the date and
  * likes count.
  */
-public class PostDetailsActivity extends AppCompatActivity implements PostDetailsView {
+public class PostDetailsActivity extends AppCompatActivity implements PostDetailsMvp.View {
 
     public static final String POST_EXTRA = "POST";
 
@@ -52,7 +52,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     @BindView(R.id.tv_post_detail_date)
     TextView tvDate;
 
-    private PostDetailsPresenter postDetailsPresenter;
+    private PostDetailsMvp.Presenter postDetailsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
 
     @Inject
     @Override
-    public void setPresenter(PostDetailsPresenter presenter) {
+    public void setPresenter(PostDetailsMvp.Presenter presenter) {
         this.postDetailsPresenter = presenter;
     }
 
@@ -150,7 +150,7 @@ public class PostDetailsActivity extends AppCompatActivity implements PostDetail
     }
 
     /**
-     * Sets upp the Toolbar to be used as the ActionBar
+     * Sets up the Toolbar to be used as the ActionBar
      */
     private void setupActionBar() {
         setSupportActionBar(toolbar);

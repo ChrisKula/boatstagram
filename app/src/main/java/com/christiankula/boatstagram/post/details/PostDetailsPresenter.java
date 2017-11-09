@@ -1,7 +1,6 @@
 package com.christiankula.boatstagram.post.details;
 
 import com.christiankula.boatstagram.feed.rest.models.Post;
-import com.christiankula.boatstagram.mvp.BasePresenter;
 import com.christiankula.boatstagram.utils.FileUtils;
 
 import java.util.Date;
@@ -9,29 +8,24 @@ import java.util.Date;
 import javax.inject.Inject;
 
 /**
- * This class is responsible for "presenting" a PostDetailsView. It handles business logic for displaying post details
- * <br/>
- * <br/>
- * It also updates the "Model" according to the PostDetailsView interactions. The "Model" is simply represented
- * by a {@link Post} representing the displayed Post and a {@code boolean} indicating whether the toolbar and the info
- * panel overlay are visible
+ * This class is responsible for getting the data provided by {@link #postDetailsModel} and reacts accordingly on the
+ * {@link #postDetailsView}
  */
-public class PostDetailsPresenter implements BasePresenter<PostDetailsView> {
+public class PostDetailsPresenter implements PostDetailsMvp.Presenter {
 
-    private PostDetailsView postDetailsView;
-
-    private Post currentDisplayedPost;
-
-    private boolean isInfoPanelVisible;
+    private PostDetailsMvp.View postDetailsView;
+    private PostDetailsMvp.Model postDetailsModel;
 
     @Inject
-    public PostDetailsPresenter() {
+    public PostDetailsPresenter(PostDetailsMvp.Model model) {
+        this.postDetailsModel = model;
     }
 
     @Override
-    public void attachView(PostDetailsView view) {
+    public void attachView(PostDetailsMvp.View view) {
         this.postDetailsView = view;
-        isInfoPanelVisible = true;
+        postDetailsModel.setUiOverlayVisibility(true);
+        postDetailsModel.setCurrentDisplayedPost(postDetailsView.getPostFromIntent());
     }
 
     @Override
@@ -39,36 +33,30 @@ public class PostDetailsPresenter implements BasePresenter<PostDetailsView> {
         this.postDetailsView = null;
     }
 
+    @Override
+    public void onCreate() {
+        Post post = postDetailsModel.getCurrentDisplayedPost();
 
-    /**
-     * Display post details and picture in full-res. First checks if full-res pictures has been previously and loads it
-     * instead of downloading it again if it exists
-     * <br/>
-     * <br/>
-     * Tied to {@link #postDetailsView}'s {@code onResume} method.
-     */
-    void onCreate() {
-        currentDisplayedPost = postDetailsView.getPostFromIntent();
-
-        if (FileUtils.postPictureExistsOnDisk(currentDisplayedPost)) {
-            postDetailsView.setPicture(FileUtils.getPostPictureFile(currentDisplayedPost));
+        if (FileUtils.postPictureExistsOnDisk(post)) {
+            postDetailsView.setPicture(FileUtils.getPostPictureFile(post));
         } else {
-            postDetailsView.setPicture(currentDisplayedPost.getDisplaySrc());
+            postDetailsView.setPicture(post.getDisplaySrc());
         }
 
-        postDetailsView.setCaption(currentDisplayedPost.getCaption());
-        postDetailsView.setDate(new Date(currentDisplayedPost.getDate() * 1000));
-        postDetailsView.setLikesCount(currentDisplayedPost.getLikes().getCount());
+        postDetailsView.setCaption(post.getCaption());
+        postDetailsView.setDate(new Date(post.getDate() * 1000));
+        postDetailsView.setLikesCount(post.getLikes().getCount());
+
+        postDetailsModel.setCurrentDisplayedPost(post);
     }
 
+    @Override
+    public void onRootViewTouch() {
+        boolean isVisible = !postDetailsModel.isUiOverlayVisible();
 
-    /**
-     * Toggles toolbar and info panel overlay visibility when user touches the {@link #postDetailsView}'s root view
-     */
-    void onRootViewTouch() {
-        isInfoPanelVisible = !isInfoPanelVisible;
+        postDetailsView.setToolbarVisibility(isVisible);
+        postDetailsView.setPostInfoVisibility(isVisible);
 
-        postDetailsView.setToolbarVisibility(isInfoPanelVisible);
-        postDetailsView.setPostInfoVisibility(isInfoPanelVisible);
+        postDetailsModel.setUiOverlayVisibility(isVisible);
     }
 }
